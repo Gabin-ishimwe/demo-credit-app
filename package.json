@@ -7,11 +7,12 @@
     "dev": "nodemon",
     "build": "rimraf ./build && tsc",
     "start": "npm run build && node build/index.js",
-    "db:migrate:latest": "node -r dotenv/config ./node_modules/knex/bin/cli.js migrate:latest --knexfile src/database/knexfile.ts",
+    "db:migrate:latest": "node -r dotenv/config ./node_modules/knex/bin/cli.js migrate:up --knexfile src/database/knexfile.ts",
     "db:migrate:rollback": "node -r dotenv/config ./node_modules/knex/bin/cli.js migrate:rollback --all --knexfile src/database/knexfile.ts",
     "db:migrate:make": "npx knex migrate:make migration_name -x ts",
     "db:seed:create": "npx knex seed:make seed_name",
-    "db:migrate:seed": "node -r dotenv/config ./node_modules/knex/bin/cli.js seed:run --knexfile src/database/knexfile.ts --client pg"
+    "db:migrate:seed": "node -r dotenv/config ./node_modules/knex/bin/cli.js seed:run --knexfile src/database/knexfile.ts --client pg",
+    "db:migrate:down": "node -r dotenv/config ./node_modules/knex/bin/cli.js migrate:down --knexfile src/database/knexfile.ts --client pg"
   },
   "keywords": [],
   "author": "",
@@ -29,6 +30,7 @@
     "jsonwebtoken": "^8.5.1",
     "knex": "^2.3.0",
     "morgan": "^1.10.0",
+    "objection": "^3.0.1",
     "pg": "^8.8.0"
   },
   "devDependencies": {
