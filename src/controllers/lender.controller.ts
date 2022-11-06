@@ -11,9 +11,10 @@ class LenderController {
     try {
       const { id } = req.user;
       const loan = req.body;
-      await LenderService.createLenderService(loan, id);
+      const lenderOffer = await LenderService.createLenderService(loan, id);
       return res.status(201).json({
         message: "Lender offer created successful",
+        lenderOffer,
       });
     } catch (error) {
       console.log(error);
@@ -31,12 +32,13 @@ class LenderController {
     try {
       const { id } = req.params;
       const loan = req.body;
-      const updated = await LenderService.updateLenderService(
+      const updatedLenderOffer = await LenderService.updateLenderService(
         loan,
         parseInt(id)
       );
       return res.status(200).json({
         message: "Lender offer updated successfull",
+        updatedLenderOffer,
       });
     } catch (error) {
       return res.status(500).json({
@@ -53,8 +55,8 @@ class LenderController {
     try {
       const offers = await LenderService.getAllOfferService();
       return res.status(200).json({
-        offers,
         message: "Lender offer retrieved successfull",
+        offers,
       });
     } catch (error) {
       return res.status(500).json({
@@ -72,8 +74,8 @@ class LenderController {
       const { id } = req.params;
       const offer = await LenderService.getLenderService(parseInt(id));
       return res.status(200).json({
-        offer,
         message: "Lender offer retrieved successfull",
+        offer,
       });
     } catch (error) {
       return res.status(500).json({
