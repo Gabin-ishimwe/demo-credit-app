@@ -1,6 +1,7 @@
 import { Model } from "objection";
 import AccountModel from "./account.model";
 import LenderModel from "./lender.model";
+import LoanModel from "./loan.model";
 import RoleModel from "./role.model";
 
 class UserModel extends Model {
@@ -43,6 +44,14 @@ class UserModel extends Model {
         join: {
           from: "users.id",
           to: "account.user_id",
+        },
+      },
+      loan_application: {
+        relation: Model.HasManyRelation,
+        modelClass: LoanModel,
+        join: {
+          from: "users.id",
+          to: "loan_application.user_id",
         },
       },
     };

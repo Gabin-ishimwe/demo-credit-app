@@ -12,7 +12,8 @@
     "db:migrate:make": "npx knex migrate:make migration_name -x ts",
     "db:seed:create": "npx knex seed:make seed_name",
     "db:migrate:seed": "node -r dotenv/config ./node_modules/knex/bin/cli.js seed:run --knexfile src/database/knexfile.ts --client pg",
-    "db:migrate:down": "node -r dotenv/config ./node_modules/knex/bin/cli.js migrate:down --knexfile src/database/knexfile.ts --client pg"
+    "db:migrate:down": "node -r dotenv/config ./node_modules/knex/bin/cli.js migrate:down --knexfile src/database/knexfile.ts --client pg",
+    "test": "mocha test"
   },
   "keywords": [],
   "author": "",

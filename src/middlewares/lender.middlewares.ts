@@ -26,7 +26,6 @@ export const checkOfferOwner = async (
   const found = user.lender_offer.some(
     (offer: any) => offer.id == parseInt(id)
   );
-  console.log(found);
   if (found) {
     return next();
   }

@@ -18,8 +18,8 @@ export const checkLoggedInUser = async (
       .findById(decoded.id)
       .withGraphFetched("roles")
       .withGraphFetched("lender_offer")
-      .withGraphFetched("account");
-    console.log(freshUser);
+      .withGraphFetched("account")
+      .withGraphFetched("loan_application");
     req.user = freshUser;
     next();
   } catch (error) {
@@ -30,7 +30,6 @@ export const checkLoggedInUser = async (
 
 export const roles = (...roles: string[]) => {
   return (req: Request, res: Response, next: NextFunction) => {
-    console.log(req.user.roles[0].role_name);
     if (!roles.includes(req.user.roles[0].role_name)) {
       return res
         .status(403)

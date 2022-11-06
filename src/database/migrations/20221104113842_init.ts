@@ -27,14 +27,43 @@ export async function up(knex: Knex): Promise<void> {
     })
     .createTable("lender_offer", (table) => {
       table.increments("id");
-      table.string("loan_type");
-      table.double("interest_rate");
-      table.double("payment_period");
-      table.double("amount_offered");
+      table.string("loan_type").notNullable();
+      table.double("interest_rate").notNullable();
+      table.double("payment_period").notNullable();
+      table.double("amount_offered").notNullable();
       table
         .enu("status", ["AVAILABLE", "NOT_AVAILABLE"])
+        .notNullable()
         .defaultTo("AVAILABLE");
-      table.integer("user_id").references("users.id");
+      table.integer("user_id").references("users.id").notNullable();
+      table.timestamps(true, true);
+    })
+    .createTable("loan_application", (table) => {
+      table.increments("id");
+      table.double("amount_requested").notNullable();
+      table.double("amount_payed").notNullable().defaultTo(0);
+      table
+        .enu("status", ["PENDING", "REJECTED", "APPROVED"])
+        .notNullable()
+        .defaultTo("PENDING");
+      table.integer("user_id").references("users.id").notNullable();
+      table.integer("lender_offer_id").references("lender_offer.id");
+      table.timestamps(true, true);
+    })
+    .createTable("transactions", (table) => {
+      table.increments("id");
+      table.enu("type", ["CREDIT", "DEBIT"]).notNullable();
+      table.double("amount").notNullable();
+      table
+        .integer("account_id")
+        .references("account_number")
+        .inTable("account")
+        .notNullable();
+      table
+        .integer("loan_application_id")
+        .references("id")
+        .inTable("loan_application");
+      // .notNullable();
       table.timestamps(true, true);
     })
     .catch((error) => {
@@ -48,6 +77,9 @@ export async function down(knex: Knex): Promise<void> {
     .dropTableIfExists("users")
     .dropTableIfExists("roles")
     .dropTableIfExists("accounts")
+    .dropTableIfExists("lender_offer")
+    .dropTableIfExists("loan_application")
+    .dropTableIfExists("transactions")
     .catch((error) => {
       console.log(error);
       throw error;
