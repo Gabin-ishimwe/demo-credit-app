@@ -56,11 +56,11 @@ exports.seed = async function (knex) {
     },
   ])
   await knex("user_roles_mapping").insert([
-    // {
-    //   id: 1,
-    //   user_id: 1,
-    //   role_id: 1
-    // },
+    {
+      id: 1,
+      user_id: 1,
+      role_id: 1
+    },
     {
       id: 2,
       user_id: 2,

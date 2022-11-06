@@ -4,14 +4,16 @@ import LenderModel from "../models/lender.model";
 
 class LenderService {
   static async createLenderService(offer: LenderOffer, userId: number) {
-    return db("lender_offer").insert({
-      loan_type: offer.loanType,
-      interest_rate: offer.interestRate,
-      payment_period: offer.paymentPeriod,
-      amount_offered: offer.amountOffered,
-      user_id: userId,
-      status: offer.status,
-    });
+    return db("lender_offer")
+      .insert({
+        loan_type: offer.loanType,
+        interest_rate: offer.interestRate,
+        payment_period: offer.paymentPeriod,
+        amount_offered: offer.amountOffered,
+        user_id: userId,
+        status: offer.status,
+      })
+      .returning("*");
   }
   static async getLenderService(id: number) {
     return LenderModel.query().findById(id);
