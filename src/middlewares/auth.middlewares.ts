@@ -16,10 +16,14 @@ export const checkLoggedInUser = async (
     const decoded = decodeToken(token);
     const freshUser = await UserModel.query()
       .findById(decoded.id)
-      .withGraphFetched("roles")
-      .withGraphFetched("lender_offer")
-      .withGraphFetched("account")
-      .withGraphFetched("loan_application");
+      .withGraphFetched({
+        roles: true,
+        lender_offer: {
+          loan_application: true,
+        },
+        account: true,
+        loan_application: true,
+      });
     req.user = freshUser;
     next();
   } catch (error) {

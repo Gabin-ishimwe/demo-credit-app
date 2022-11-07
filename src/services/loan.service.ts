@@ -36,6 +36,11 @@ class LoanService {
         users: {
           account: true,
         },
+        lender_offer: {
+          users: {
+            account: true,
+          },
+        },
       });
   }
 }

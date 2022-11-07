@@ -87,26 +87,39 @@ class AccountController {
   static async payLoan(req: Request, res: Response, next: NextFunction) {
     try {
       const user = req.user;
+      const loan = req.data;
       const { amount, loanId } = req.body;
       const withdrawTransaction = await db.transaction(async (trx) => {
+        // find account of lender and deposit the amount
         await trx("account")
-          .where("account_number", user.account.account_number)
+          .where(
+            "account_number",
+            loan.lender_offer.users.account.account_number
+          )
           .update({
-            balance_amount: user.account.balance_amount + amount,
+            balance_amount:
+              loan.lender_offer.users.account.balance_amount + amount,
           });
+
+        // edit amount_payed in the loan_application
+        await trx("loan_application").where("id", loan.id).update({
+          amount_payed: amount,
+        });
+
+        // record transaction
         const transactionMade = await TransactionModel.query(trx)
           .insert({
             type: "CREDIT",
             amount: amount,
-            account_id: user.account.account_number,
-            loan_application_id: null,
+            account_id: loan.lender_offer.users.account.account_number,
+            loan_application_id: loanId,
           })
           .returning("*")
           .withGraphFetched({
             account: true,
           });
         return {
-          message: "Amount withdrawn on account",
+          message: "Loan Payed successfuly and amount transfered to lender",
           transaction: transactionMade,
         };
       });
