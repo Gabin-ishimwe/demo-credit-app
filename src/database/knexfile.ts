@@ -1,4 +1,4 @@
-import type { Knex } from "knex";
+import { Knex } from "knex";
 import dotenv from "dotenv";
 import path from "path";
 import { knexSnakeCaseMappers } from "objection";
@@ -20,6 +20,7 @@ const knexConfig: { [key: string]: Knex.Config } = {
     },
     migrations: {
       tableName: "knex_migrations",
+      extension: "ts",
     },
     seeds: {
       directory: "./seeds",
@@ -39,6 +40,7 @@ const knexConfig: { [key: string]: Knex.Config } = {
     },
     migrations: {
       tableName: "knex_migrations",
+      extension: "ts",
     },
     seeds: {
       directory: "./seeds",
@@ -61,6 +63,7 @@ const knexConfig: { [key: string]: Knex.Config } = {
     },
     seeds: {
       directory: "./seeds",
+      extension: "ts",
     },
   },
 
