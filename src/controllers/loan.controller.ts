@@ -71,19 +71,81 @@ class LoanController {
     }
   }
 
-  static async getLoanApplication(
+  // static async getLoanApplication(
+  //   req: Request,
+  //   res: Response,
+  //   next: NextFunction
+  // ) {
+  //   try {
+  //     const { id } = req.params;
+  //     const loanApplication = await LoanService.getLoanApplication(
+  //       parseInt(id)
+  //     );
+
+  //     res.status(201).json({
+  //       message: "Loan application",
+  //       loanApplication,
+  //     });
+  //   } catch (error) {
+  //     console.log(error);
+  //     return res.status(500).json({
+  //       message: "Error occured while retrieving loan application",
+  //     });
+  //   }
+  // }
+
+  static async getBorrowerLoanApplication(
     req: Request,
     res: Response,
     next: NextFunction
   ) {
     try {
       const { id } = req.params;
-      const loanApplication = await LoanService.getLoanApplication(
-        parseInt(id)
+      const user = req.user;
+      const findLoan = user.loan_application.filter(
+        (loan: any) => loan.id == id
       );
+      if (findLoan.length == 0) {
+        return res.status(404).json({
+          message: "Loan application you want doesn't exist",
+        });
+      }
 
-      res.status(201).json({
+      return res.status(201).json({
         message: "Loan application",
+        loanApplication: findLoan[0],
+      });
+    } catch (error) {
+      console.log(error);
+      return res.status(500).json({
+        message: "Error occured while retrieving loan application",
+      });
+    }
+  }
+
+  static async getAllLenderLoanApplication(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    try {
+      const { id } = req.params;
+      const user = req.user;
+      let loanApplication: any[] = [];
+      const lenderOffers = user.lender_offer;
+      if (lenderOffers.length == 0) {
+        return res.status(400).json({
+          message: "There are no Loan Applications",
+        });
+      }
+      lenderOffers.forEach((offer: any) => {
+        offer.loan_application.forEach((loan: any) => {
+          loanApplication.push(loan);
+        });
+      });
+
+      return res.status(201).json({
+        message: "Lender's Loan application",
         loanApplication,
       });
     } catch (error) {
@@ -94,17 +156,56 @@ class LoanController {
     }
   }
 
-  static async getAllLoanApplication(
+  static async getLenderLoanApplication(
     req: Request,
     res: Response,
     next: NextFunction
   ) {
     try {
-      const loanApplication = await LoanService.getAllLoanApplication();
+      const { id } = req.params;
+      const user = req.user;
+      let loanApplication: any[] = [];
+      const lenderOffers = user.lender_offer;
+      if (lenderOffers.length == 0) {
+        return res.status(404).json({
+          message: "There are no Loan Applications",
+        });
+      }
+      lenderOffers.forEach((offer: any) => {
+        offer.loan_application.forEach((loan: any) => {
+          loanApplication.push(loan);
+        });
+      });
 
+      loanApplication = loanApplication.filter((loan: any) => loan.id == id);
+      if (loanApplication.length == 0) {
+        return res.status(404).json({
+          message: "This Loan application doesn't exist",
+        });
+      }
+
+      return res.status(201).json({
+        message: "Lender's Loan application",
+        loanApplication,
+      });
+    } catch (error) {
+      console.log(error);
+      return res.status(500).json({
+        message: "Error occured while retrieving loan application",
+      });
+    }
+  }
+
+  static async getAllBorrowerLoanApplication(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ) {
+    try {
+      const user = req.user;
       res.status(201).json({
         message: "All loan Applications",
-        loanApplication,
+        loanApplication: user.loan_application,
       });
     } catch (error) {
       console.log(error);
@@ -178,9 +279,6 @@ class LoanController {
           })
           .returning("*")
           .withGraphFetched({
-            account: {
-              users: true,
-            },
             loan_application: true,
           });
         return {

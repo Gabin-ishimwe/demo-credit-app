@@ -1,12 +1,13 @@
 import Joi from "joi";
 import { Request, Response, NextFunction } from "express";
 
-const accountValidation = (req: Request, res: Response, next: NextFunction) => {
-  const accountSchema = Joi.object({
+const payLoanValidation = (req: Request, res: Response, next: NextFunction) => {
+  const payLoadSchema = Joi.object({
     amount: Joi.number().positive().required(),
+    loanId: Joi.number().positive().required(),
   });
 
-  const result = accountSchema.validate(req.body);
+  const result = payLoadSchema.validate(req.body);
   if (result.error) {
     res.status(400).json({
       message: result.error.details[0].message.replace(/["'`]+/g, ""),
@@ -16,4 +17,4 @@ const accountValidation = (req: Request, res: Response, next: NextFunction) => {
   }
 };
 
-export default accountValidation;
+export default payLoanValidation;

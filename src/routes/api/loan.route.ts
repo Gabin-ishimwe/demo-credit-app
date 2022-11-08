@@ -38,19 +38,37 @@ loanRoutes.patch(
   checkLoggedInUser,
   roles("LENDER"),
   checkLoanExist,
-  // checkLoanStatus("PENDING"),
-  // loanValidation,
   lenderResponseValidation,
   LoanController.respondeLoanApplication
 );
 
 loanRoutes.get(
-  "/:id",
+  "/borrower/:id",
   checkLoggedInUser,
-  checkLoanExist,
-  LoanController.getLoanApplication
+  roles("BORROWER"),
+  // checkLoanExist,
+  LoanController.getBorrowerLoanApplication
 );
 
-loanRoutes.get("/", checkLoggedInUser, LoanController.getAllLoanApplication);
+loanRoutes.get(
+  "/borrower",
+  checkLoggedInUser,
+  roles("BORROWER"),
+  LoanController.getAllBorrowerLoanApplication
+);
+
+loanRoutes.get(
+  "/lender",
+  checkLoggedInUser,
+  roles("LENDER"),
+  LoanController.getAllLenderLoanApplication
+);
+
+loanRoutes.get(
+  "/lender/:id",
+  checkLoggedInUser,
+  roles("LENDER"),
+  LoanController.getLenderLoanApplication
+);
 
 export default loanRoutes;

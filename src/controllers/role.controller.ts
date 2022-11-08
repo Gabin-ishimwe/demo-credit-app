@@ -3,6 +3,7 @@ import RoleModel from "../models/role.model";
 import UserModel from "../models/user.model";
 import RoleService from "../services/role.service";
 import db from "../database/db";
+import UserRoleModel from "../models/user_role.model";
 
 class RoleController {
   static async assignRole(req: Request, res: Response, next: NextFunction) {
@@ -17,22 +18,19 @@ class RoleController {
       const user = await UserModel.query()
         .findById(userId)
         .withGraphFetched("roles");
-      let roleFound = false;
-      for (let i = 0; i < user?.roles.length; i++) {
-        if (user?.roles[i].id == roleId) {
-          roleFound = true;
-          return res.status(500).json({ message: "User arleady has the role" });
-        }
+      const found = user?.roles.some((role: any) => role.id == roleId);
+      if (found) {
+        return res.status(500).json({ message: "User arleady has the role" });
       }
-      if (!roleFound) {
-        await db("user_roles_mapping").insert({
-          user_id: userId,
-          role_id: roleId,
-        });
-        res.status(201).json({
-          message: "User roles assigned",
-        });
-      }
+      await UserRoleModel.query().insert({
+        user_id: userId,
+        role_id: roleId,
+      });
+      res.status(201).json({
+        message: "User roles assigned",
+      });
+      // if (!roleFound) {
+      // }
     } catch (error) {
       console.log(error);
       return res.status(500).json({
