@@ -32,7 +32,6 @@ class RoleController {
       // if (!roleFound) {
       // }
     } catch (error) {
-      console.log(error);
       return res.status(500).json({
         message: "Error occured while assigning role",
       });

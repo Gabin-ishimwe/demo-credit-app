@@ -7,7 +7,6 @@ class AccountController {
   static async depositMoney(req: Request, res: Response, next: NextFunction) {
     try {
       const user = req.user;
-      console.log(user);
       const { amount } = req.body;
       const depositTransaction = await db.transaction(async (trx) => {
         await trx("account")
@@ -35,7 +34,6 @@ class AccountController {
         ...depositTransaction,
       });
     } catch (error) {
-      console.log(error);
       return res.status(500).json({
         message: "Error occured while creating depositing money",
       });
@@ -77,7 +75,6 @@ class AccountController {
         ...withdrawTransaction,
       });
     } catch (error) {
-      console.log(error);
       return res.status(500).json({
         message: "Error occured while widthrawing money",
       });
@@ -127,7 +124,6 @@ class AccountController {
         ...withdrawTransaction,
       });
     } catch (error) {
-      console.log(error);
       return res.status(500).json({
         message: "Error occured while widthrawing money",
       });

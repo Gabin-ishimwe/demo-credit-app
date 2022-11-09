@@ -17,7 +17,6 @@ class LenderController {
         lenderOffer,
       });
     } catch (error) {
-      console.log(error);
       return res.status(500).json({
         message: "Error occured while creating loan offer",
       });

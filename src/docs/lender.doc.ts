@@ -35,14 +35,6 @@ export const lender = {
           JWT: [],
         },
       ],
-      parameters: [
-        {
-          name: "id",
-          in: "path",
-          description: "lender id",
-          require: true,
-        },
-      ],
       responses,
     },
   },

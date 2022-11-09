@@ -2,10 +2,6 @@ import Joi from "joi";
 import { Request, Response, NextFunction } from "express";
 
 const loanValidation = (req: Request, res: Response, next: NextFunction) => {
-  // amountRequested: number;
-  // amountPayed: number;
-  // status: string;
-  // lenderOfferId: number;
   const loanSchema = Joi.object({
     amountRequested: Joi.number().empty().positive().required(),
     amountPayed: Joi.number().empty().positive(),

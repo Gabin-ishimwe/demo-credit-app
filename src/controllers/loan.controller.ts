@@ -32,7 +32,6 @@ class LoanController {
         loanApplication,
       });
     } catch (error) {
-      console.log(error);
       return res.status(500).json({
         message: "Error occured while creating loan application",
       });
@@ -64,35 +63,11 @@ class LoanController {
         loanApplication,
       });
     } catch (error) {
-      console.log(error);
       return res.status(500).json({
         message: "Error occured while updating loan application",
       });
     }
   }
-
-  // static async getLoanApplication(
-  //   req: Request,
-  //   res: Response,
-  //   next: NextFunction
-  // ) {
-  //   try {
-  //     const { id } = req.params;
-  //     const loanApplication = await LoanService.getLoanApplication(
-  //       parseInt(id)
-  //     );
-
-  //     res.status(201).json({
-  //       message: "Loan application",
-  //       loanApplication,
-  //     });
-  //   } catch (error) {
-  //     console.log(error);
-  //     return res.status(500).json({
-  //       message: "Error occured while retrieving loan application",
-  //     });
-  //   }
-  // }
 
   static async getBorrowerLoanApplication(
     req: Request,
@@ -116,7 +91,6 @@ class LoanController {
         loanApplication: findLoan[0],
       });
     } catch (error) {
-      console.log(error);
       return res.status(500).json({
         message: "Error occured while retrieving loan application",
       });
@@ -149,7 +123,6 @@ class LoanController {
         loanApplication,
       });
     } catch (error) {
-      console.log(error);
       return res.status(500).json({
         message: "Error occured while retrieving loan application",
       });
@@ -189,7 +162,6 @@ class LoanController {
         loanApplication,
       });
     } catch (error) {
-      console.log(error);
       return res.status(500).json({
         message: "Error occured while retrieving loan application",
       });
@@ -208,7 +180,6 @@ class LoanController {
         loanApplication: user.loan_application,
       });
     } catch (error) {
-      console.log(error);
       return res.status(500).json({
         message: "Error occured while retrieving loan application",
       });
@@ -288,7 +259,6 @@ class LoanController {
       });
       return res.status(200).json({ ...transactionExec });
     } catch (error) {
-      console.log(error);
       return res.status(500).json({
         message: "Error occured while responding to loan application",
       });

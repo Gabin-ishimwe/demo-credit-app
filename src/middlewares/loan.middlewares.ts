@@ -38,7 +38,6 @@ export const checkLoanExist = async (
   }
   const found = await LoanService.getLoanApplication(parseInt(id));
   if (found) {
-    console.log(found);
     req.data = found;
     return next();
   }

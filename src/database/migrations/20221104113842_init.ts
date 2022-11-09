@@ -73,13 +73,6 @@ export async function up(knex: Knex): Promise<void> {
 }
 
 export async function down(knex: Knex): Promise<void> {
-  // await knex.raw("TRUNCATE TABLE users CASCADE");
-  // await knex.raw("TRUNCATE TABLE user_roles_mapping CASCADE");
-  // await knex.raw("TRUNCATE TABLE roles CASCADE");
-  // await knex.raw("TRUNCATE TABLE account CASCADE");
-  // await knex.raw("TRUNCATE TABLE lender_offer CASCADE");
-  // await knex.raw("TRUNCATE TABLE loan_application CASCADE");
-  // await knex.raw("TRUNCATE TABLE loan_application CASCADE");
   return knex.schema
     .dropTableIfExists("users")
     .dropTableIfExists("roles")

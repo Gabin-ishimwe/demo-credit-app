@@ -31,10 +31,11 @@ class UserController {
             password: hashPassword(password),
           })
           .returning("*");
+        const role = await trx("roles").where({ role_name: "BORROWER" });
         const userRole = await trx("user_roles_mapping")
           .insert({
             user_id: createdUser[0].id,
-            role_id: 1,
+            role_id: role[0].id,
           })
           .returning("*");
         await trx("account")
@@ -64,7 +65,6 @@ class UserController {
         token,
       });
     } catch (error) {
-      console.log(error);
       return res.status(500).json({
         message: "Error occured while registering user",
         error,

@@ -5,7 +5,6 @@ import { userRegister } from "./mock/user";
 
 describe("USER'S ENDPOINTS", () => {
   describe("USER REGISTER", async () => {
-    console.log("testing running---");
     const res = await request(app)
       .post("/api/auth/register")
       .send({

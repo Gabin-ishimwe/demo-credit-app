@@ -35,7 +35,7 @@ const config = {
     title: "Demo App API",
   },
   host,
-  basePath: "/api",
+  basePath: process.env.NODE_ENV === "prod" ? "api" : "/api",
   schemes: ["http", "https"],
   securityDefinitions: {
     JWT: {

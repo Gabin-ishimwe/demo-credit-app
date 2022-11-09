@@ -6,10 +6,6 @@ const lenderResponseValidation = (
   res: Response,
   next: NextFunction
 ) => {
-  // loanType: string;
-  // interestRate: number;
-  // paymentPeriod: number;
-  // amountOffered: number;
   const lenderResponseSchema = Joi.object({
     loanId: Joi.number().positive().required(),
     status: Joi.string().valid("APPROVED", "REJECTED").required(),
