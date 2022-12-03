@@ -31,11 +31,11 @@ class UserController {
             password: hashPassword(password),
           })
           .returning("*");
-        const role = await trx("roles").where({ role_name: "BORROWER" });
+        // const role = await trx("roles").where({ role_name: "BORROWER" });
         const userRole = await trx("user_roles_mapping")
           .insert({
             user_id: createdUser[0].id,
-            role_id: role[0].id,
+            role_id: 1,
           })
           .returning("*");
         await trx("account")

@@ -19,6 +19,12 @@ exports.seed = async function (knex) {
     await knex.raw("TRUNCATE TABLE account CASCADE")
     await knex.raw("TRUNCATE TABLE lender_offer CASCADE")
     await knex.raw("TRUNCATE TABLE loan_application CASCADE")
+    await knex.raw("ALTER SEQUENCE users_id_seq RESTART WITH 1")
+    await knex.raw("ALTER SEQUENCE roles_id_seq RESTART WITH 1")
+    await knex.raw("ALTER SEQUENCE user_roles_mapping_id_seq RESTART WITH 1")
+    await knex.raw("ALTER SEQUENCE account_account_number_seq RESTART WITH 1")
+    await knex.raw("ALTER SEQUENCE lender_offer_id_seq RESTART WITH 1")
+    await knex.raw("ALTER SEQUENCE loan_application_id_seq RESTART WITH 1")
     return knex('users').insert(user).returning("*")
       .then(async (users) => {
         let promises = [];
