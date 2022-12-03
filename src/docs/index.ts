@@ -36,7 +36,7 @@ const config = {
   },
   host,
   basePath: process.env.NODE_ENV === "prod" ? "api" : "/api",
-  schemes: ["http", "https"],
+  schemes: process.env.NODE_ENV === "prod" ? ["https"] : ["http"],
   securityDefinitions: {
     JWT: {
       type: "apiKey",
