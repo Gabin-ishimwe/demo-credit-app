@@ -68,4 +68,5 @@ const knexConfig: { [key: string]: Knex.Config } = {
   ...knexSnakeCaseMappers,
 };
 
-export default knexConfig;
+// export default knexConfig;
+module.exports = knexConfig;
